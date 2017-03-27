@@ -2,20 +2,15 @@ package com.theironyard.novauc.entities;
 
 import javax.persistence.*;
 
-/**
- * Created by octavio on 3/17/17.
- */
 @Entity
 @Table(name = "users")
-
 public class User {
-
     @Id
     @GeneratedValue
     int id;
 
     @Column(nullable = false)
-    String name;
+    String username;
 
     @Column(nullable = false)
     String address;
@@ -24,22 +19,11 @@ public class User {
     String email;
 
     @Column(nullable = false)
-    String cellphone;
+    String ssn;
 
     @Column(nullable = false)
-    String servicebranch;
+    boolean working;
 
-    public  User(){
-
-    }
-
-    public User(String name, String address, String email, String cellphone, String servicebranch) {
-        this.name = name;
-        this.address = address;
-        this.email = email;
-        this.cellphone = cellphone;
-        this.servicebranch = servicebranch;
-    }
 
     public int getId() {
         return id;
@@ -49,12 +33,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAddress() {
@@ -73,19 +57,19 @@ public class User {
         this.email = email;
     }
 
-    public String getCellphone() {
-        return cellphone;
+    public String getSsn() {
+        return ssn;
     }
 
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
     }
 
-    public String getServicebranch() {
-        return servicebranch;
+    public boolean isWorking() {
+        return working;
     }
 
-    public void setServicebranch(String servicebranch) {
-        this.servicebranch = servicebranch;
+    public void setWorking(boolean working) {
+        this.working = working;
     }
 }

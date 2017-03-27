@@ -6,12 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
+import java.rmi.server.ExportException;
 import java.util.List;
-
-/**
- * Created by octavio on 3/17/17.
- */
 
 @RestController
 public class PeopleGroupsController {
@@ -20,20 +16,23 @@ public class PeopleGroupsController {
     UserRepository users;
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
-    public List<User> getUsers() {
+    public List<User> readUser() {
         return (List<User>) users.findAll();
     }
-
     @RequestMapping(path = "/user", method = RequestMethod.POST)
-    public void addUser(@RequestBody User user) {
+    public void createUser(@RequestBody User user) {
         users.save(user);
     }
-
     @RequestMapping(path = "/user", method = RequestMethod.PUT)
-    public void updateUser(@RequestBody User user) {
-        users.save(user);
-    }
+    public void updateUser(@RequestBody User user) throws Exception{
 
+        if (users.exists(user.getId())){
+            users.save(user);
+        } else {
+            throw new ExportException("User not found. Check user ID.");
+        }
+
+    }
     @RequestMapping(path = "/user/{id}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable("id") int id) {
         users.delete(id);
@@ -44,12 +43,17 @@ public class PeopleGroupsController {
         return users.findOne(id);
     }
 
-    @PostConstruct
-    public void init() {
 
-        if (users.count() == 0) {
-            User user = new User("Mike", "123 Main ST", "southcarolina@gmail.com", "123456", "Army");
+    @PostConstruct
+    public void init(){
+        if (users.count() == 0){
+            User user = new User();
+            user.setAddress("123 Testville");
+            user.setEmail("me@you.com");
+            user.setUsername("Mike");
+            user.setSsn("333-444-5522");
+            user.setWorking(true);
             users.save(user);
         }
-        }
     }
+}
