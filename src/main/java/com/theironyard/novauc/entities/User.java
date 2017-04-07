@@ -24,6 +24,15 @@ public class User {
     @Column(nullable = false)
     boolean working;
 
+    public User(){}
+
+    public User(String username, String address, String email, String ssn, boolean working) {
+        this.username = username;
+        this.address = address;
+        this.email = email;
+        this.ssn = ssn;
+        this.working = working;
+    }
 
     public int getId() {
         return id;
